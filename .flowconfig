@@ -1,0 +1,13 @@
+[ignore]
+
+[include]
+
+[libs]
+
+[lints]
+sketchy-null=error
+untyped-type-import=error
+
+[options]
+experimental.const_params=true
+munge_underscores=true
