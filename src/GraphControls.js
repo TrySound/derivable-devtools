@@ -21,12 +21,12 @@ const Btn = styled.div`
   width: 24px;
   height: 24px;
   background: rgba(255, 255, 255, 0.75);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, .25);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
   border-radius: 3px;
   fill: #444;
 
   &:hover {
-  box-shadow: 0 0 1px rgba(0, 0, 0, .25);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.25);
     fill: #000;
   }
 
@@ -54,7 +54,7 @@ const CircleGraph = props => (
   </svg>
 );
 
-const ChaoticGraph = props => (
+const CoseGraph = props => (
   <svg viewBox="0 0 74 74" {...props}>
     <path d="M65.8 13.3c-4 0-7.2 3.2-7.2 7.2 0 1.8.7 3.5 1.8 4.8L48.6 43.8c-.6-.2-1.3-.3-2-.3-1.5 0-3 .5-4.2 1.3l-8.3-6.7c.4-.9.6-1.8.6-2.8 0-4-3.2-7.2-7.2-7.2s-7.2 3.2-7.2 7.2c0 1.2.3 2.3.8 3.3L12 47.1c-1.1-.6-2.3-1-3.7-1-4 0-7.2 3.2-7.2 7.2s3.2 7.2 7.2 7.2 7.2-3.2 7.2-7.2c0-1.2-.3-2.3-.8-3.3l9.1-8.5c1.1.6 2.3 1 3.7 1 1.5 0 3-.5 4.2-1.3l8.3 6.7c-.4.9-.6 1.8-.6 2.8 0 4 3.2 7.2 7.2 7.2s7.2-3.2 7.2-7.2c0-1.8-.7-3.5-1.8-4.8l11.7-18.5c.6.2 1.3.3 2 .3 4 0 7.2-3.2 7.2-7.2s-3.1-7.2-7.1-7.2zM8.2 56.7c-1.8 0-3.2-1.5-3.2-3.2s1.5-3.2 3.2-3.2 3.2 1.5 3.2 3.2-1.4 3.2-3.2 3.2zm19.2-18.1c-1.8 0-3.2-1.5-3.2-3.2s1.5-3.2 3.2-3.2 3.2 1.5 3.2 3.2-1.4 3.2-3.2 3.2zM46.6 54c-1.8 0-3.2-1.5-3.2-3.2s1.5-3.2 3.2-3.2 3.2 1.5 3.2 3.2-1.4 3.2-3.2 3.2zm19.2-30.2c-1.8 0-3.2-1.5-3.2-3.2s1.5-3.2 3.2-3.2 3.2 1.5 3.2 3.2-1.5 3.2-3.2 3.2z" />
   </svg>
@@ -62,14 +62,14 @@ const ChaoticGraph = props => (
 
 const GraphControls = (props: Props) => (
   <Container>
-    <Btn>
-      <CircleGraph onClick={() => props.onChangeLayout("circle")} />
+    <Btn title="Circle layout" onClick={() => props.onChangeLayout("circle")}>
+      <CircleGraph />
     </Btn>
-    <Btn>
-      <ChaoticGraph onClick={() => props.onChangeLayout("cose")} />
+    <Btn title="Cose layout" onClick={() => props.onChangeLayout("cose")}>
+      <CoseGraph />
     </Btn>
     <Separator />
-    <Btn>
+    <Btn title="Fit to viewport">
       <Fit onClick={props.onFit} />
     </Btn>
   </Container>
