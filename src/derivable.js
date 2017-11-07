@@ -112,11 +112,7 @@ function retrieveParentsFrame () {
   return parentsStack[parentsStack.length - 1];
 }
 function stopCapturingParents () {
-  if (typeof devtoolsHook === 'function') {
-    devtoolsHook(parentsStack.pop().parents);
-  } else {
-    parentsStack.pop();
-  }
+  parentsStack.pop();
   child = parentsStack.length === 0
           ? null
           : parentsStack[parentsStack.length - 1].child;
@@ -707,6 +703,9 @@ assign(Atom.prototype, {
 
   get: function () {
     maybeCaptureParent(this);
+    if (typeof devtoolsHook === 'function') {
+      devtoolsHook('captureAtom', this);
+    }
     return this._value;
   },
 });

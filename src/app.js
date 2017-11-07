@@ -10,7 +10,7 @@ b.__devtools_label__ = "b";
 const c = atom(30);
 c.__devtools_label__ = 'c';
 
-const tuple = derive(() => [a.get(), b.get()]);
+const tuple = derive(() => Array.from({ length: 20 }).map(() => [a.get(), b.get()]));
 tuple.__devtools_label__ = "tuple";
 
 const sum = derive(() => tuple.get()[0] + tuple.get()[1]);

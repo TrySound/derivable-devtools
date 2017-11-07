@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import styled from "styled-components";
+import uniq from 'lodash/uniq';
 import JsonView from "react-json-view";
 
 import ObserveResize from "./ObserveResize.js";
@@ -14,11 +15,17 @@ type State = {
   hidden: boolean
 };
 
-const reactors = utils.customAtom([]);
+const activeAtoms = utils.customAtom([]);
 
-window.__DERIVABLE_DEVTOOLS_HOOK__ = utils.batchSyncArrays(captured => {
-  reactors.set(utils.findReactors([...reactors.get(), ...captured]));
+const batchAtoms = utils.batchSync(atoms => {
+  activeAtoms.set(uniq([...activeAtoms.get().filter(utils.hasActiveReactors), ...atoms]));
 });
+
+window.__DERIVABLE_DEVTOOLS_HOOK__ = (event, data) => {
+  if (event === "captureAtom") {
+    batchAtoms(data);
+  }
+};
 
 const Toggle = styled(props => (
   <svg viewBox="0 0 14 16" className={props.className} onClick={props.onClick}>
@@ -59,6 +66,7 @@ const Panel = styled.div`
   padding: 10px;
   position: relative;
   background: rgb(36, 36, 36);
+  overflow: auto;
 `;
 
 const Layout = styled(ObserveResize)`
@@ -83,8 +91,8 @@ class DevTools extends React.Component<{}, State> {
   ids: Map<Object, string> = new Map();
 
   componentDidMount() {
-    reactors.react(items => {
-      const { nodes, ids } = utils.createLayout(items, this.ids);
+    activeAtoms.react(atoms => {
+      const { nodes, ids } = utils.createLayout(atoms, this.ids);
       this.ids = ids;
       this.setState({
         nodes
@@ -96,7 +104,10 @@ class DevTools extends React.Component<{}, State> {
     const { selected, nodes, hidden } = this.state;
     const selectedNode = nodes.find(d => d.id === selected);
     return [
-      <Toggle key="btn" onClick={() => this.setState(prev => ({ hidden: !prev.hidden}))} />,
+      <Toggle
+        key="btn"
+        onClick={() => this.setState(prev => ({ hidden: !prev.hidden }))}
+      />,
       <Container key="app" hidden={hidden}>
         <Layout
           render={({ width, height }) => (

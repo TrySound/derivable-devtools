@@ -29,8 +29,6 @@ const getValue = (d: Object) => d._value;
 
 const getChildren = (d: Object) => d._activeChildren;
 
-const getParents = (d: Object) => d._parents || [];
-
 const getType = (d: Object) => {
   if (isAtom(d)) {
     return "atom";
@@ -60,17 +58,17 @@ export const customAtom = (_value: any) => {
   };
 };
 
-export const batchSyncArrays = (callback: ($ReadOnlyArray<Object>) => void) => {
+export const batchSync = (callback: ($ReadOnlyArray<Object>) => void) => {
   let batchedPromise;
   let all;
-  return (items: $ReadOnlyArray<Object>) => {
+  return (item: Object) => {
     if (batchedPromise && all) {
-      all.push(items);
+      all.push(item);
     } else {
-      all = [items];
+      all = [item];
       batchedPromise = Promise.resolve().then(() => {
         if (all) {
-          callback(uniq(flatten(all)));
+          callback(all);
         }
         batchedPromise = null;
         all = null;
@@ -79,16 +77,12 @@ export const batchSyncArrays = (callback: ($ReadOnlyArray<Object>) => void) => {
   };
 };
 
-export const findReactors = (derivables: $ReadOnlyArray<Object>) =>
-  uniq(
-    traverse(derivables, getChildren)
-      .filter(isActiveReactor)
-      .filter(hasGovernor)
-  );
+export const hasActiveReactors = (atom: Object) =>
+  traverse([atom], getChildren).filter(isActiveReactor);
 
-export const createLayout = (reactors: $ReadOnlyArray<Object>, prevIds: Map<Object, string>) => {
+export const createLayout = (atoms: $ReadOnlyArray<Object>, prevIds: Map<Object, string>) => {
   const ids: Map<Object, string> = new Map();
-  const sources = uniq(traverse(reactors.map(d => d._parent), getParents));
+  const sources = uniq(traverse(atoms, getChildren)).filter(isNotReactor);
 
   sources.forEach(source => {
     const id = prevIds.get(source) ? prevIds.get(source): nanoid();
