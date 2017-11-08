@@ -24,6 +24,7 @@ name.react(d => {
 - Something more?
 - Wrap long string values in graph
 - Convert to scientific notation big numbers graph
+- Prevent visualizing governor (internal) derivations
 
 ## License
 
