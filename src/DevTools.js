@@ -33,6 +33,7 @@ const Toggle = styled(props => (
   </svg>
 ))`
   position: absolute;
+  z-index: 10000;
   top: 20px;
   right: 0;
   width: 20px;
@@ -46,6 +47,7 @@ const Toggle = styled(props => (
 
 const Container = styled.div`
   position: absolute;
+  z-index: 10000;
   top: 50px;
   right: 0;
   bottom: 50px;

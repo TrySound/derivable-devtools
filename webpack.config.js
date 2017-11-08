@@ -1,5 +1,6 @@
 const path = require('path');
 const Html = require('html-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   entry: './src/app.js',
@@ -30,6 +31,7 @@ if (process.env.NODE_ENV === 'production') {
     output: Object.assign(module.exports.output, {
       libraryTarget: "commonjs2",
     }),
+    externals: [nodeExternals()],
     devtool: undefined,
     plugins: []
   });
