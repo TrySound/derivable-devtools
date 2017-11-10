@@ -1,5 +1,7 @@
 # [derivable](https://github.com/ds300/derivablejs) devtools
 
+<img src='assets/screen.png' width='800' />
+
 ## Usage
 
 ```js
