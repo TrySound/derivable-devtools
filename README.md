@@ -1,6 +1,8 @@
-# [derivable](https://github.com/ds300/derivablejs) devtools
+# Derivable Devtools
 
-<img src='assets/screen.png' width='800' />
+The devtools for a holistic state management library [DerivableJS](https://github.com/ds300/derivablejs).
+
+<img src='assets/screen.png' width='600' align='center' />
 
 ## Usage
 
