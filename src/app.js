@@ -1,5 +1,5 @@
 import './index.js';
-import { atom, derive } from "./derivable";
+import { atom, derive } from "derivable";
 
 const a = atom(10);
 a.__devtools_label__ = "a";
